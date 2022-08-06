@@ -1,0 +1,26 @@
+{
+  "name": "nodejs_again",
+  "version": "1.0.0",
+  "description": "f8,nodejs",
+  "main": "index.js",
+  "scripts": {
+    "start":"nodemon --inspect index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TienHunter/nodejs_again.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TienHunter/nodejs_again/issues"
+  },
+  "homepage": "https://github.com/TienHunter/nodejs_again#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
