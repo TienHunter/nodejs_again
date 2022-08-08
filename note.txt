@@ -1,5 +1,0 @@
-nodemon & debug
---> lắng nghe file thay đổi và reload lại server
-
-Install Morgan
-template engines(handlebars)
