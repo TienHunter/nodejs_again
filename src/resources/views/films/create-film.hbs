@@ -1,0 +1,42 @@
+<form method="POST" action="/film/create-film" enctype="multipart/form-data" >
+    <div class="mb-3">
+        <label  class="form-label">Tên phim</label>
+        <input type="text" class="form-control" name="filmName">
+    </div>
+    <div class="mb-3">
+        <label  class="form-label">Mô tả</label>
+        <textarea class="form-control" rows="4" cols="50" name="description"></textarea>
+    </div>
+    <div class="mb-3">
+        <label  class="form-label">Thời gian chiếu</label>
+        <select name="time-show">
+            {{#each times}}
+            <option value="{{this.keyMap}}">{{this.value}}</option>
+            {{/each}}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label  class="form-label">Thể loại</label>
+        <select name="category">
+            {{#each categories}}
+            <option value="{{this.categoryID}}">{{this.categoryName}}</option>
+            {{/each}}
+
+        </select>
+    </div>
+    <div class="mb-3">
+        <label  class="form-label">Hình ảnh</label>
+        <input type="file" class="form-control" name="upload-image">
+        <img src="/images/my-do-toa.png" class="create-film__image"/>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<script>
+    const imageTag = document.querySelector('.create-film__image')
+    const inputFile = document.querySelector('[name="upload-image"]')
+    inputFile.onchange = function(event){
+        const file = event.target.files[0]
+        const url = URL.createObjectURL(file)
+        imageTag.src = url
+    }
+</script>
