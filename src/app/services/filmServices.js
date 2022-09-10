@@ -22,6 +22,20 @@ const getDataToCreateFilm = ()=>{
         }
     })
 }
+const createFilmDb = (data)=>{
+    return new Promise(async(resolve, reject)=>{
+        try {
+            let film = await db.Film.create({
+                ...data
+            })
+            resolve(film)
+        }
+        catch (error) {
+            reject(error)
+        }
+    })
+}
 module.exports = {
-    getDataToCreateFilm
+    getDataToCreateFilm,
+    createFilmDb
 }
