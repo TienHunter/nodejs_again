@@ -1,18 +1,24 @@
 <div class="mt-4">
-    <form method="POST" action="/film/create-film" enctype="multipart/form-data" >
+    <h2> Cập nhật film</h2>
+    <form method="POST" action="/film/{{film.id}}/updated" enctype="multipart/form-data" >
     <div class="mb-3">
         <label  class="form-label">Tên phim</label>
-        <input type="text" class="form-control" name="filmName">
+        <input type="text" class="form-control" name="filmName" value="{{film.filmName}}">
     </div>
     <div class="mb-3">
         <label  class="form-label">Mô tả</label>
-        <textarea class="form-control" rows="4" cols="50" name="description"></textarea>
+        <textarea class="form-control" rows="4" cols="50" name="description">{{film.description}}</textarea>
     </div>
     <div class="mb-3">
         <label  class="form-label">Thời gian chiếu</label>
         <select name="timeShow">
             {{#each times}}
+            {{#if (compareStr this.keyMap ../film.timeID)}}
+            <option value="{{this.keyMap}}" selected>{{this.value}}</option>
+            {{else}}
             <option value="{{this.keyMap}}">{{this.value}}</option>
+
+            {{/if}}
             {{/each}}
         </select>
     </div>
@@ -20,7 +26,11 @@
         <label  class="form-label">Thể loại</label>
         <select name="category">
             {{#each categories}}
+            {{#if (compareStr this.categoryID ../film.categoryID)}}
+            <option value="{{this.categoryID}}" selected>{{this.categoryName}}</option>
+            {{else}}
             <option value="{{this.categoryID}}">{{this.categoryName}}</option>
+            {{/if}}
             {{/each}}
 
         </select>
@@ -28,7 +38,7 @@
     <div class="mb-3">
         <label  class="form-label">Hình ảnh</label>
         <input type="file" class="form-control" name="upload-image">
-        <img src="/images/my-do-toa.png" class="create-film__image"/>
+        <img src="/{{film.image}}" class="create-film__image"/>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>

@@ -5,4 +5,7 @@ const filmController = require('../app/controllers/filmController')
 
 router.get('/create', filmController.getDataFilmCreate)
 router.post('/create-film',upload.single('upload-image'),filmController.createFilm)
+router.get('/:id/edit', filmController.editFilm)
+router.post('/:id/updated',upload.single('upload-image'),filmController.updatedFilm)
+
 module.exports = router;

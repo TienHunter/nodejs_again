@@ -1,0 +1,33 @@
+<div>
+    <h3 class="mt-4">Danh sách quản lý film</h3>
+    <table class="table mt-4 list-films__table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Tên film</th>
+      <th scope="col">Hình ảnh</th>
+      <th scope="col">Thể loại</th>
+      <th scope="col">Lịch chiếu</th>
+      <th scope="col">Hành động</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each films}}
+    <tr>
+      <th scope="row">{{sum @index 1}}</th>
+      <td>{{this.filmName}}</td>
+      <td>
+        <img src="/{{this.image}}" alt="{{this.filmName}}" class="list-film__image-item" />
+      </td>
+      <td>{{this.Category.categoryName}}</td>
+      <td>{{this.Allcode.value}}</td>
+      <td>
+        <a class="btn btn-warning" href="/film/{{this.id}}/edit">Sửa</a>
+        <button type="button" class="btn btn-danger">Xóa</button>
+      </td>
+    </tr>
+    {{/each}}
+
+  </tbody>
+</table>
+</div>

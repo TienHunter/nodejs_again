@@ -10,7 +10,14 @@ const route = require('./routes')
 // HTTP protocol
 // app.use(morgan('combined'))
 // Template engine
-app.engine('.hbs', engine({ extname: '.hbs' }) /** Configuration */);
+app.engine('.hbs', engine({
+   extname: '.hbs' ,
+   helpers:{
+      sum: (a,b)=>a+b,
+      compareStr : (s1,s2) =>s1===s2
+   }
+   
+   }) /** Configuration */);
 app.set('view engine', '.hbs');
 app.set('views', path.join(__dirname, 'resources/views') /** graft path */);
 // console.log(__dirname);

@@ -35,7 +35,39 @@ const createFilmDb = (data)=>{
         }
     })
 }
+const getFilmByID = (id)=>{
+    return new Promise(async(resolve, reject)=>{
+        try {
+            let film = await db.Film.findOne({
+                where:{
+                    id
+                },
+                raw:true 
+            })
+            resolve(film)
+        }
+        catch (error){
+            reject(error)   
+        }
+    })
+}
+const updatedFilmService = (id,data)=>{
+    return new Promise(async(resolve, reject)=>{
+        try {
+            await db.Film.update({
+                ...data,
+            },{
+                where:{id}
+            })
+            resolve(true)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
 module.exports = {
     getDataToCreateFilm,
-    createFilmDb
+    createFilmDb,
+    getFilmByID,
+    updatedFilmService
 }
