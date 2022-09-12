@@ -8,5 +8,6 @@ router.post('/create-film',upload.single('upload-image'),filmController.createFi
 router.get('/:id/edit', filmController.editFilm)
 router.post('/:id/updated',upload.single('upload-image'),filmController.updatedFilm)
 router.delete('/:id/deleted',filmController.deleteFilm)
-
 module.exports = router;
+
+

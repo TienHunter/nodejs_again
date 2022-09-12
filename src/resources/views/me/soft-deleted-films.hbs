@@ -1,7 +1,6 @@
 <div>
-    <h3 class="mt-4">Danh sách quản lý film</h3>
-    <a href="/me/soft-deleted/films">Thùng rác: ({{numOfSoftDel}})</a>
-    <a href="/film/create" class="btn btn-primary float-end">Thêm film mới</a>
+    <h3 class="mt-4">Danh sách quản lý film đã xóa</h3>
+    <a href="/me/stored/films">Quay lại</a>
     <table class="table mt-4 list-films__table">
   <thead>
     <tr>
@@ -14,7 +13,7 @@
     </tr>
   </thead>
   <tbody>
-    {{#each films}}
+    {{#each filmsSoftDel}}
     <tr>
       <th scope="row">{{sum @index 1}}</th>
       <td>{{this.filmName}}</td>
@@ -24,7 +23,7 @@
       <td>{{this.Category.categoryName}}</td>
       <td>{{this.Allcode.value}}</td>
       <td>
-        <a class="btn btn-warning" href="/film/{{this.id}}/edit">Sửa</a>
+        <a class="btn btn-warning" href="/film/{{this.id}}/restore">Khôi phục</a>
         <button 
         type="button"
          class="btn btn-danger ms-2"
@@ -59,7 +58,7 @@
     </div>
   </div>
 </div>
-<form id="formDelete" name="formDelele"></form>
+{{!-- <form id="formDelete" name="formDelele"></form>
 <script>
 
   const softDelModal = document.getElementById('softDelModal')
@@ -80,4 +79,4 @@
       
     }
   })
-</script>
+</script> --}}
