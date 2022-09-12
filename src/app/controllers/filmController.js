@@ -2,7 +2,8 @@ const {
     getDataToCreateFilm,
     createFilmDb,
     getFilmByID,
-    updatedFilmService
+    updatedFilmService,
+    deleteFillmService
     } = require('../services/filmServices')
 
 const getDataFilmCreate = async(req, res) => {
@@ -77,9 +78,20 @@ const updatedFilm = async(req, res) => {
         res.status(500).json({message:error})
     }
 }
+const deleteFilm = async(req, res) => {
+    try {
+        let filmID = req.params.id
+        if(!filmID) res.status(404).json({message:'missing params'})
+        await deleteFillmService(filmID)
+        res.redirect('/me/stored/films')
+    } catch (error) {
+        res.status(500).json({message:error})            
+    }
+}
 module.exports = {
     getDataFilmCreate,
     createFilm,
     editFilm,
-    updatedFilm
+    updatedFilm,
+    deleteFilm
 }

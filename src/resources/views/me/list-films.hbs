@@ -1,5 +1,7 @@
 <div>
     <h3 class="mt-4">Danh sách quản lý film</h3>
+    <a href="#">Thùng rác: (0)</a>
+    <a href="/film/create" class="btn btn-primary float-end">Thêm film mới</a>
     <table class="table mt-4 list-films__table">
   <thead>
     <tr>
@@ -23,7 +25,13 @@
       <td>{{this.Allcode.value}}</td>
       <td>
         <a class="btn btn-warning" href="/film/{{this.id}}/edit">Sửa</a>
-        <button type="button" class="btn btn-danger">Xóa</button>
+        <button 
+        type="button"
+         class="btn btn-danger ms-2"
+          data-bs-toggle="modal"
+           data-bs-target="#softDelModal"
+           data-bs-whatever="{{this.id}}"
+           >Xóa</button>
       </td>
     </tr>
     {{/each}}
@@ -31,3 +39,45 @@
   </tbody>
 </table>
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="softDelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabe">Cảnh báo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Bạn có chắc chắn muốn xóa chủ đề này
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" id="btnConfirmDel">Xóa</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+<form id="formDelete" name="formDelele"></form>
+<script>
+
+  const softDelModal = document.getElementById('softDelModal')
+  softDelModal.addEventListener('show.bs.modal', function (event) {
+    // Button that triggered the modal
+    const button = event.relatedTarget
+    // Extract info from data-bs-* attributes
+    const filmId = button.getAttribute('data-bs-whatever')
+    //console.log('filmID:',filmId)
+    const btnConfirmDel = document.getElementById("btnConfirmDel")
+    //console.log(btnConfirmDel)
+    btnConfirmDel.onclick = function(){
+      const formDelele = document.getElementById('formDelete')
+      //console.log(formDelele)
+      formDelele.method = 'POST'
+      formDelele.action = `/film/${filmId}/deleted?_method=DELETE`
+      formDelele.submit()
+      
+    }
+  })
+</script>

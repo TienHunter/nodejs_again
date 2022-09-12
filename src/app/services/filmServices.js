@@ -65,9 +65,24 @@ const updatedFilmService = (id,data)=>{
         }
     })
 }
+const deleteFillmService=(id)=>{
+    return new Promise(async(resolve, reject)=>{
+        try {
+            await db.Film.destroy({
+                where:{
+                    id
+                },
+            })
+            resolve(true)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
 module.exports = {
     getDataToCreateFilm,
     createFilmDb,
     getFilmByID,
-    updatedFilmService
+    updatedFilmService,
+    deleteFillmService
 }

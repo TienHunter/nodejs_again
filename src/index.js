@@ -2,7 +2,10 @@ const path = require('path')
 const express = require('express')
 const morgan = require('morgan')
 const { engine } = require('express-handlebars')
+const methodOverride = require('method-override')
+
 const app = express()
+
 require("dotenv").config();
 const port = process.env.PORT || 3001
 
@@ -31,7 +34,8 @@ app.use(express.urlencoded({
    extended: true
 }));
 app.use(express.json());
-
+// override with POST having ?_method=DELETE
+app.use(methodOverride('_method'))
 
 //Route init
 route(app)
