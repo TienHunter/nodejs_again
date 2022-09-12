@@ -23,12 +23,12 @@
       <td>{{this.Category.categoryName}}</td>
       <td>{{this.Allcode.value}}</td>
       <td>
-        <a class="btn btn-warning" href="/film/{{this.id}}/restore">Khôi phục</a>
+        <button class="btn btn-warning btnRestoreFilm" data-filmID="{{this.id}}" >Khôi phục</button>
         <button 
         type="button"
          class="btn btn-danger ms-2"
           data-bs-toggle="modal"
-           data-bs-target="#softDelModal"
+           data-bs-target="#delForceModal"
            data-bs-whatever="{{this.id}}"
            >Xóa</button>
       </td>
@@ -41,7 +41,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="softDelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="delForceModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -49,7 +49,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        Bạn có chắc chắn muốn xóa chủ đề này
+        Bạn có chắc chắn muốn xóa vĩnh viễn chủ đề này
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" id="btnConfirmDel">Xóa</button>
@@ -58,11 +58,24 @@
     </div>
   </div>
 </div>
-{{!-- <form id="formDelete" name="formDelele"></form>
+<form id="formRestoreFilm" name="formRestoreFilm"></form>
+<form id="formDeleteForce" name="formDeleleForce"></form>
 <script>
+  // restore film
+  const btnRestoreFilm = document.querySelectorAll('.btnRestoreFilm')
+  btnRestoreFilm.forEach(item=>
+    item.addEventListener('click', function() {
+      const filmID = item.getAttribute('data-filmID')
+      const formRestoreFilm = document.getElementById('formRestoreFilm')
+      formRestoreFilm.method='POST'
+      formRestoreFilm.action=`/film/${filmID}/restored?_method=PATCH`
+      formRestoreFilm.submit();
 
-  const softDelModal = document.getElementById('softDelModal')
-  softDelModal.addEventListener('show.bs.modal', function (event) {
+    })
+  )
+
+  const delForceModal = document.getElementById('delForceModal')
+  delForceModal.addEventListener('show.bs.modal', function (event) {
     // Button that triggered the modal
     const button = event.relatedTarget
     // Extract info from data-bs-* attributes
@@ -71,12 +84,11 @@
     const btnConfirmDel = document.getElementById("btnConfirmDel")
     //console.log(btnConfirmDel)
     btnConfirmDel.onclick = function(){
-      const formDelele = document.getElementById('formDelete')
+      const formDelele = document.getElementById('formDeleteForce')
       //console.log(formDelele)
       formDelele.method = 'POST'
-      formDelele.action = `/film/${filmId}/deleted?_method=DELETE`
+      formDelele.action = `/film/${filmId}/deleted-force?_method=DELETE`
       formDelele.submit()
-      
     }
   })
-</script> --}}
+</script>

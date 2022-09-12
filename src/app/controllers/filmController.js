@@ -3,7 +3,9 @@ const {
     createFilmDb,
     getFilmByID,
     updatedFilmService,
-    deleteFillmService
+    deleteFilmService,
+    deleteForceFilmService,
+    restoredFilmService
     } = require('../services/filmServices')
 
 const getDataFilmCreate = async(req, res) => {
@@ -35,7 +37,7 @@ const createFilm = async(req, res) => {
         if(data && data.filmName && data.categoryID && data.timeID && data.image) {
             let film = await createFilmDb(data)
             if(film)
-            res.render('me/list-films')
+            res.redirect('me/stored/films')
             else
             res.status(500).json({message:'error from db'})
         }else {
@@ -82,16 +84,38 @@ const deleteFilm = async(req, res) => {
     try {
         let filmID = req.params.id
         if(!filmID) res.status(404).json({message:'missing params'})
-        await deleteFillmService(filmID)
+        await deleteFilmService(filmID)
         res.redirect('/me/stored/films')
     } catch (error) {
         res.status(500).json({message:error})            
     }
+}
+const deleteForceFilm = async(req, res) => {
+    try {
+        let filmID = req.params.id
+        if(!filmID) res.status(404).json({message:'missing params'})
+        await deleteForceFilmService(filmID)
+        res.redirect('/me/trash/films')
+    } catch (error) {
+        res.status(500).json({message:error})            
+    }
+}
+const restoredFilm = async(req, res) => {
+   try {
+    let filmID = req.params.id
+    if(!filmID) res.status(404).json({message:'missing params'})
+    await restoredFilmService(filmID)
+    res.redirect('/me/trash/films')
+   } catch (error) {
+    res.status(500).json({message:error})
+   }
 }
 module.exports = {
     getDataFilmCreate,
     createFilm,
     editFilm,
     updatedFilm,
-    deleteFilm
+    deleteFilm,
+    deleteForceFilm,
+    restoredFilm
 }

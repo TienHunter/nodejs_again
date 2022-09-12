@@ -14,7 +14,7 @@ const getSoftDelFilms = async(req, res) => {
     try {
 
         let filmsSoftDel = await getFilmsSoftDel()
-        res.render('me/soft-deleted-films',{filmsSoftDel})
+        res.render('me/trash-films',{filmsSoftDel})
     } catch (error) {
         res.status(500).json({message:error})
     }
