@@ -5,7 +5,8 @@ const {
     updatedFilmService,
     deleteFilmService,
     deleteForceFilmService,
-    restoredFilmService
+    restoredFilmService,
+    getDetailFilmService
     } = require('../services/filmServices')
 
 const getDataFilmCreate = async(req, res) => {
@@ -110,6 +111,17 @@ const restoredFilm = async(req, res) => {
     res.status(500).json({message:error})
    }
 }
+const getDetailFilm = async(req, res) => {
+    try {
+        let filmID = req.params.id
+        if(!filmID) res.status(404).json({message:'missing params'})
+        let film = await getDetailFilmService(filmID)
+        // res.json(film)
+        res.render('films/detail-film',{film})
+    }catch (error) {
+        res.status(500).json({message:error})
+    }
+}
 module.exports = {
     getDataFilmCreate,
     createFilm,
@@ -117,5 +129,6 @@ module.exports = {
     updatedFilm,
     deleteFilm,
     deleteForceFilm,
-    restoredFilm
+    restoredFilm,
+    getDetailFilm
 }

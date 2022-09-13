@@ -10,6 +10,7 @@ router.post('/:id/updated',upload.single('upload-image'),filmController.updatedF
 router.delete('/:id/deleted',filmController.deleteFilm)
 router.delete('/:id/deleted-force',filmController.deleteForceFilm)
 router.patch('/:id/restored',filmController.restoredFilm)
+router.get('/:id/detail',filmController.getDetailFilm)
 module.exports = router;
 
 

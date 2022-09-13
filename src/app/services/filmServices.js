@@ -106,6 +106,32 @@ const deleteForceFilmService=(id)=>{
         }
     })
 }
+const getDetailFilmService = (id)=>{
+    return new Promise(async(resolve, reject)=>{
+        try {
+            let film = await db.Film.findOne({
+                where:{
+                    id
+                },
+                include:[
+                    {
+                        model:db.Category,
+                        attributes:['categoryName']
+                    },
+                    {
+                        model:db.Allcode,
+                        attributes:['value']
+                    }
+                ],
+                raw:true,
+                nest:true
+            })
+            resolve(film)
+        } catch(error){
+            reject(error)
+        }
+    })
+}
 module.exports = {
     getDataToCreateFilm,
     createFilmDb,
@@ -113,5 +139,6 @@ module.exports = {
     updatedFilmService,
     deleteFilmService,
     restoredFilmService,
-    deleteForceFilmService
+    deleteForceFilmService,
+    getDetailFilmService
 }

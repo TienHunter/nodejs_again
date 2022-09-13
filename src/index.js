@@ -3,7 +3,7 @@ const express = require('express')
 const morgan = require('morgan')
 const { engine } = require('express-handlebars')
 const methodOverride = require('method-override')
-
+const cors = require('cors')
 const app = express()
 
 require("dotenv").config();
@@ -36,7 +36,7 @@ app.use(express.urlencoded({
 app.use(express.json());
 // override with POST having ?_method=DELETE
 app.use(methodOverride('_method'))
-
+app.use(cors())
 //Route init
 route(app)
 
