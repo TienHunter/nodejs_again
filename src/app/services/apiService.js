@@ -13,6 +13,31 @@ const getFilmsService = ()=>{
     })
 
 }
+const getFilmService=(id)=>{
+    return new Promise(async(resolve, reject)=>{
+        try {
+            let film = await db.Film.findOne({
+                where:{id},
+                include:[
+                    {
+                        model:db.Category,
+                        attributes:['categoryName']
+                    },
+                    {
+                        model:db.Allcode,
+                        attributes:['value']
+                    }
+                ],
+                raw:true,
+                nest:true
+            })
+            resolve(film)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
 module.exports = {
-    getFilmsService
+    getFilmsService,
+    getFilmService
 }
