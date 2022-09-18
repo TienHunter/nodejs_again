@@ -1,14 +1,129 @@
 <div class="mt-4 mb-4 container">
-    <div class="row">
-        <div class="col-lg-3">
-            <p>Side bar</p>
-        </div>
-        <div class="col-lg-9">
-            <img src="/{{film.image}}" alt="{{film.filmName}}" class="detail-film__image"/>
-            <h1 class="detail-film__title">{{film.filmName}}</h1>
-            <h2 class="detail-film__category">Thể loại: {{filmName.Category.categoryName}}</h2>
-            <h3 class="detail-film__timeShow">Lịch chiếu : {{film.Allcode.value}}</h3>
-            <p class="detail-film__desc">{{film.description}}</p>
-        </div>
+  <div class="row">
+    <div class="col-lg-3">
+      <p>Side bar</p>
     </div>
+    <div class="col-lg-9">
+      <div class="des-film">
+        <img
+          src="/{{film.image}}"
+          alt="{{film.filmName}}"
+          class="detail-film__image"
+        />
+        <h1 class="detail-film__title">{{film.filmName}}</h1>
+        <h2 class="detail-film__category">Thể loại:
+          {{film.Category.categoryName}}</h2>
+        <h3 class="detail-film__timeShow">Lịch chiếu :
+          {{film.Allcode.value}}</h3>
+        <p class="detail-film__desc">{{film.description}}</p>
+      </div>
+      <div class="list-episodes">
+        <h3 class="mt-4">Danh sách quản lý tập film</h3>
+        <a
+          href="/film/{{film.id}}/add-episode"
+          class="btn btn-primary float-end"
+        >Thêm tập mới</a>
+        <table class="table mt-4 list-films__table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Tập phim</th>
+              <th scope="col">Tiêu đề</th>
+              <th scope="col">URL</th>
+              <th scope="col">Ngày tạo</th>
+              <th scope="col">Hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each episodes}}
+              <tr>
+                <th scope="row">{{sum @index 1}}</th>
+                <td>
+                  <p>{{this.episode}}</p>
+                </td>
+                <td>
+                  <p>{{this.title}}</p>
+                </td>
+                <td>
+                  <a href="{{this.link}}"> {{this.link}}</a>
+                </td>
+                <td>
+                  <p>{{this.createdAt}}</p>
+                </td>
+                <td>
+                  <button
+                    type="button"
+                    class="btn btn-danger ms-2"
+                    data-bs-toggle="modal"
+                    data-bs-target="#delModal"
+                    data-bs-episodeid="{{this.id}}"
+                    data-bs-filmid="{{../film.id}}"
+                  >Xóa</button>
+                </td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="delModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabe">Cảnh báo</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        Bạn có chắc chắn muốn xóa chủ đề này
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-danger"
+          id="btnConfirmDel"
+        >Xóa</button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+<form id="formDelete" name="formDelele"></form>
+
+<script>
+
+  const delModal = document.getElementById('delModal');
+  delModal.addEventListener('show.bs.modal', function (event) { 
+    // Button that triggered the modal 
+  const button = event.relatedTarget // Extract info from data-bs-* attributes 
+  const episodeID = button.getAttribute('data-bs-episodeid') ;
+  const filmID = button.getAttribute('data-bs-filmid')
+  //console.log('filmID:',filmId) const
+  btnConfirmDel = document.getElementById("btnConfirmDel");
+  //console.log(btnConfirmDel) 
+  btnConfirmDel.onclick = function(){
+    const formDelele = document.getElementById('formDelete') ;//console.log(formDelele)
+    formDelele.method = 'POST';
+    formDelele.action =`/film/${filmID}/episode/${episodeID}/deleted?_method=DELETE`; 
+    formDelele.submit();
+   }
+  })
+</script>

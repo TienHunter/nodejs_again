@@ -1,10 +1,4 @@
 @import "variables";
-h1{
-   color: green;
-}
-h2{
-   color:$red-color;
-}
 .header__avatar {
    width: 32px;
    height: 32px;
@@ -18,7 +12,6 @@ h2{
    object-fit: cover;
 
 }
-
 // list-film
 // .list-films__table {
 //    border: 1px solid #565656;

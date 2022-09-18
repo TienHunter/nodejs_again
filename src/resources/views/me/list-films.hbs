@@ -1,62 +1,84 @@
 <div>
-    <h3 class="mt-4">Danh sách quản lý film</h3>
-    <a href="/me/trash/films">Thùng rác: ({{numOfSoftDel}})</a>
-    <a href="/film/create" class="btn btn-primary float-end">Thêm film mới</a>
-    <table class="table mt-4 list-films__table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Tên film</th>
-      <th scope="col">Hình ảnh</th>
-      <th scope="col">Thể loại</th>
-      <th scope="col">Lịch chiếu</th>
-      <th scope="col">Hành động</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each films}}
-    <tr>
-      <th scope="row">{{sum @index 1}}</th>
-      <td>
-        <a href="/film/{{this.id}}/detail">{{this.filmName}}</a>
-        </td>
-      <td>
-        <img src="/{{this.image}}" alt="{{this.filmName}}" class="list-film__image-item" />
-      </td>
-      <td>{{this.Category.categoryName}}</td>
-      <td>{{this.Allcode.value}}</td>
-      <td>
-        <a class="btn btn-warning" href="/film/{{this.id}}/edit">Sửa</a>
-        <button 
-        type="button"
-         class="btn btn-danger ms-2"
-          data-bs-toggle="modal"
-           data-bs-target="#softDelModal"
-           data-bs-whatever="{{this.id}}"
-           >Xóa</button>
-      </td>
-    </tr>
-    {{/each}}
+  <h3 class="mt-4">Danh sách quản lý film</h3>
+  <a href="/me/trash/films">Thùng rác: ({{numOfSoftDel}})</a>
+  <a href="/film/create" class="btn btn-primary float-end">Thêm film mới</a>
+  <table class="table mt-4 list-films__table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Tên film</th>
+        <th scope="col">Hình ảnh</th>
+        <th scope="col">Thể loại</th>
+        <th scope="col">Lịch chiếu</th>
+        <th scope="col">Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each films}}
+        <tr>
+          <th scope="row">{{sum @index 1}}</th>
+          <td>
+            <a href="/film/{{this.id}}/detail">{{this.filmName}}</a>
+          </td>
+          <td>
+            <img
+              src="/{{this.image}}"
+              alt="{{this.filmName}}"
+              class="list-film__image-item"
+            />
+          </td>
+          <td>{{this.Category.categoryName}}</td>
+          <td>{{this.Allcode.value}}</td>
+          <td>
+            <a class="btn btn-warning" href="/film/{{this.id}}/edit">Sửa</a>
+            <button
+              type="button"
+              class="btn btn-danger ms-2"
+              data-bs-toggle="modal"
+              data-bs-target="#softDelModal"
+              data-bs-whatever="{{this.id}}"
+            >Xóa</button>
+          </td>
+        </tr>
+      {{/each}}
 
-  </tbody>
-</table>
+    </tbody>
+  </table>
 </div>
 
-
 <!-- Modal -->
-<div class="modal fade" id="softDelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div
+  class="modal fade"
+  id="softDelModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabe">Cảnh báo</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
       <div class="modal-body">
         Bạn có chắc chắn muốn xóa chủ đề này
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" id="btnConfirmDel">Xóa</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          id="btnConfirmDel"
+        >Xóa</button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >Hủy</button>
       </div>
     </div>
   </div>
@@ -64,22 +86,19 @@
 <form id="formDelete" name="formDelele"></form>
 <script>
 
-  const softDelModal = document.getElementById('softDelModal')
-  softDelModal.addEventListener('show.bs.modal', function (event) {
-    // Button that triggered the modal
-    const button = event.relatedTarget
-    // Extract info from data-bs-* attributes
-    const filmId = button.getAttribute('data-bs-whatever')
-    //console.log('filmID:',filmId)
-    const btnConfirmDel = document.getElementById("btnConfirmDel")
-    //console.log(btnConfirmDel)
-    btnConfirmDel.onclick = function(){
-      const formDelele = document.getElementById('formDelete')
-      //console.log(formDelele)
-      formDelele.method = 'POST'
-      formDelele.action = `/film/${filmId}/deleted?_method=DELETE`
-      formDelele.submit()
-      
-    }
+  const softDelModal = document.getElementById('softDelModal');
+  softDelModal.addEventListener('show.bs.modal', function (event) { 
+    // Button that triggered the modal 
+  const button = event.relatedTarget // Extract info from data-bs-* attributes 
+  const filmId = button.getAttribute('data-bs-whatever') ;
+  //console.log('filmID:',filmId) const
+  btnConfirmDel = document.getElementById("btnConfirmDel");
+  //console.log(btnConfirmDel) 
+  btnConfirmDel.onclick = function(){
+    const formDelele = document.getElementById('formDelete') ;//console.log(formDelele)
+    formDelele.method = 'POST';
+    formDelele.action =`/film/${filmId}/deleted?_method=DELETE`; 
+    formDelele.submit();
+   }
   })
 </script>

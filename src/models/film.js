@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Film extends Model {
     /**
@@ -11,21 +9,31 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Film.belongsTo(models.Category,{foreignKey:'categoryID', targetKey:'categoryID'})
-      Film.belongsTo(models.Allcode,{foreignKey:'timeID', targetKey:'keyMap'})
-
+      Film.belongsTo(models.Category, {
+        foreignKey: "categoryID",
+        targetKey: "categoryID",
+      });
+      Film.belongsTo(models.Allcode, {
+        foreignKey: "timeID",
+        targetKey: "keyMap",
+      });
+      Film.hasMany(models.Episode);
     }
   }
-  Film.init({
-    filmName: DataTypes.STRING,
-    description: DataTypes.TEXT,
-    categoryID: DataTypes.STRING,
-    image: DataTypes.STRING,
-    timeID:DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Film',
-    paranoid: true,
-  });
+  Film.init(
+    {
+      filmName: DataTypes.STRING,
+      keyFilm: DataTypes.STRING,
+      description: DataTypes.TEXT,
+      categoryID: DataTypes.STRING,
+      image: DataTypes.STRING,
+      timeID: DataTypes.STRING,
+    },
+    {
+      sequelize,
+      modelName: "Film",
+      paranoid: true,
+    }
+  );
   return Film;
 };
