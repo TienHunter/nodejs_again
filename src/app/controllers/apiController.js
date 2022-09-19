@@ -7,6 +7,7 @@ const {
   getCategoryService,
   getFilmsbyTimeIDService,
   getFilmsMoreViewsService,
+  getEpisodesByFilmIDService,
 } = require("../services/apiService");
 const getFilms = async (req, res) => {
   try {
@@ -18,8 +19,17 @@ const getFilms = async (req, res) => {
 };
 const getDetailFilm = async (req, res) => {
   try {
-    let film = await getFilmService(req.params.id);
-    res.status(200).json(film);
+    let filmID = req.params.id;
+    let film = await getFilmService(filmID);
+    let episodes = await getEpisodesByFilmIDService(filmID);
+    if (film && episodes) {
+      let data = {};
+      data.film = film;
+      data.episodes = episodes;
+      res.status(200).json(data);
+    } else {
+      res.status(500).json({ message: "error look up from db" });
+    }
   } catch (error) {
     res.status(500).json({ message: error });
   }

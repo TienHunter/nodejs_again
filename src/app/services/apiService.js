@@ -136,6 +136,23 @@ const getFilmsMoreViewsService = () => {
     }
   });
 };
+
+//
+const getEpisodesByFilmIDService = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let episodes = await db.Episode.findAll({
+        where: { filmID: id },
+        order: [["episode", "asc"]],
+        attributes: ["filmID", "link", "title", "episode"],
+        raw: true,
+      });
+      resolve(episodes);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
 module.exports = {
   getFilmsService,
   getFilmService,
@@ -145,4 +162,5 @@ module.exports = {
   getShowtimesService,
   getFilmsbyTimeIDService,
   getFilmsMoreViewsService,
+  getEpisodesByFilmIDService,
 };
