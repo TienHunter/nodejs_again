@@ -1,5 +1,5 @@
 const db = require("../../models/index");
-
+const { Op } = require("sequelize");
 const getFilmsService = () => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -153,6 +153,24 @@ const getEpisodesByFilmIDService = (id) => {
     }
   });
 };
+const getFilmsByfilmNameService = (keyFilm) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let films = await db.Film.findAll({
+        where: {
+          keyFilm: {
+            [Op.like]: `%${keyFilm}%`,
+          },
+        },
+        limit: 8,
+        raw: true,
+      });
+      resolve(films);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
 module.exports = {
   getFilmsService,
   getFilmService,
@@ -163,4 +181,5 @@ module.exports = {
   getFilmsbyTimeIDService,
   getFilmsMoreViewsService,
   getEpisodesByFilmIDService,
+  getFilmsByfilmNameService,
 };

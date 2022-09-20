@@ -10,4 +10,5 @@ router.get("/categories", apiController.getCategories);
 router.get("/category", apiController.getCategoryByCategoryID);
 router.get("/showtimes", apiController.getShowtimes);
 router.get("/films/showmore", apiController.getFilmsMoreViews);
+router.get("/films/search", apiController.getFilmsByfilmName);
 module.exports = router;

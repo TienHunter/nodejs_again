@@ -8,6 +8,7 @@ const {
   getFilmsbyTimeIDService,
   getFilmsMoreViewsService,
   getEpisodesByFilmIDService,
+  getFilmsByfilmNameService,
 } = require("../services/apiService");
 const getFilms = async (req, res) => {
   try {
@@ -84,6 +85,16 @@ const getFilmsMoreViews = async (req, res) => {
     res.status(500).json({ message: error });
   }
 };
+const getFilmsByfilmName = async (req, res) => {
+  try {
+    let keyFilm = req.query.keyFilm;
+    // console.log(keyFilm);
+    let films = await getFilmsByfilmNameService(keyFilm);
+    res.status(200).json(films);
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+};
 module.exports = {
   getFilms,
   getDetailFilm,
@@ -93,4 +104,5 @@ module.exports = {
   getShowtimes,
   getFilmsbyTimeID,
   getFilmsMoreViews,
+  getFilmsByfilmName,
 };
