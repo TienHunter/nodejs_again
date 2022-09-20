@@ -29,3 +29,10 @@
    object-fit: cover;
    
 }
+// home
+.home__limit-text{
+   height: 120px;
+   line-height: 20px;
+   overflow: hidden;
+   text-overflow: ellipsis;
+}

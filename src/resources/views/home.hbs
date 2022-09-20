@@ -1,1 +1,24 @@
-<h1>Home Page</h1>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-3">
+      <a href="/film/create" class="btn btn-primary mt-3">Thêm film mới</a>
+      <a  href="/me/stored/films" class="btn btn-primary mt-3">Danh sách quản lý phim</a>
+    </div>
+    <div class="col-md-9">
+      <div class="row">
+        {{#each films}}
+          <div class="col-sm-4 col-6">
+            <div class="card mt-3">
+              <img src="/{{this.image}}" class="card-img-top" alt="{{this.filmName}}" />
+              <div class="card-body">
+                <h5 class="card-title">{{this.filmName}}</h5>
+                <p class="card-text home__limit-text">{{this.description}}</p>
+                <a href="/film/{{this.id}}/detail" class="btn btn-primary">Chi tiết </a>
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</div>
